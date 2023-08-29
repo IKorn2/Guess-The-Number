@@ -209,47 +209,47 @@ void first_stage(unsigned short int lng, unsigned int& first_counter) {
 			loop = true;
 		}
 		else {
-			if (first_counter == 1 && user_res == dice_res)
+		if (first_counter == 1 && user_res == dice_res)
+		{
+			switch (lng)
 			{
-				switch (lng)
-				{
-				case ENGLISH:
-					cout << dye::yellow("Wow, that was fast. Well done.") << endl;
-					break;
-				case UKRAINIAN:
-					cout << dye::yellow("Ого, так швидко. Молодець") << endl;
-					break;
-				}
-				system("pause");
-				loop = false;
+			case ENGLISH:
+				cout << dye::yellow("Wow, that was fast. Well done.") << endl;
+				break;
+			case UKRAINIAN:
+				cout << dye::yellow("Ого, так швидко. Молодець") << endl;
+				break;
 			}
-			else if (user_res == dice_res)
+			system("pause");
+			loop = false;
+		}
+		else if (user_res == dice_res)
+		{
+			switch (lng)
 			{
-				switch (lng)
-				{
-				case ENGLISH:
-					cout << dye::yellow("Well done, good job.") << endl;
-					break;
-				case UKRAINIAN:
-					cout << dye::yellow("Молодець, гарна робота.") << endl;
-					break;
-				}
-				system("pause");
-				loop = false;
+			case ENGLISH:
+				cout << dye::yellow("Well done, good job.") << endl;
+				break;
+			case UKRAINIAN:
+				cout << dye::yellow("Молодець, гарна робота.") << endl;
+				break;
 			}
-			else
+			system("pause");
+			loop = false;
+		}
+		else
+		{
+			switch (lng)
 			{
-				switch (lng)
-				{
-				case ENGLISH:
-					cout << dye::yellow("No. Answer: ") << dice_res << endl;
-					break;
-				case UKRAINIAN:
-					cout << dye::yellow("Ні. Відповідь: ") << dice_res << endl;
-					break;
-				}
-				loop = true;
+			case ENGLISH:
+				cout << dye::yellow("No. Answer: ") << dice_res << endl;
+				break;
+			case UKRAINIAN:
+				cout << dye::yellow("Ні. Відповідь: ") << dice_res << endl;
+				break;
 			}
+			loop = true;
+		}
 		}
 	} while (loop);
 }
