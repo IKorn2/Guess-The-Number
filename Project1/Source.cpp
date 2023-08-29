@@ -14,7 +14,6 @@ using namespace std;
 
 enum Menu_ch {
 	START_BTN = 1,
-	ENDLESS_BTN,
 	LANGUAGE_BTN,
 	EXIT_BTN
 
@@ -122,17 +121,15 @@ void text_menu_start(unsigned short int& choice, unsigned short int lng) {
 		case ENGLISH:
 			cout << "\t\t\t" << dye::light_red_on_bright_white("Welcome to \"Guess My Number\"") << endl; Sleep(100);
 			cout << dye::green("1)") << " " << dye::red("Start the game") << endl; Sleep(100);
-			cout << dye::green("2)") << " " << dye::red("Endless mode") << endl; Sleep(100);
-			cout << dye::green("3)") << " " << dye::red("Language") << endl; Sleep(100);
-			cout << dye::green("4)") << " " << dye::red("Exit the game") << endl; Sleep(100);
+			cout << dye::green("2)") << " " << dye::red("Language") << endl; Sleep(100);
+			cout << dye::green("3)") << " " << dye::red("Exit the game") << endl; Sleep(100);
 			cout << dye::bright_white("Choice:") << " ";
 			break;
 		case UKRAINIAN:
 			cout << "\t\t\t" << dye::light_red_on_bright_white("Вітаємо у \"Вгадай Моє Число\"") << endl; Sleep(100);
 			cout << dye::green("1)") << " " << dye::red("Розпочати гру") << endl; Sleep(100);
-			cout << dye::green("2)") << " " << dye::red("Нескінченний режим") << endl; Sleep(100);
-			cout << dye::green("3)") << " " << dye::red("Мова") << endl; Sleep(100);
-			cout << dye::green("4)") << " " << dye::red("Вийти з гри") << endl; Sleep(100);
+			cout << dye::green("2)") << " " << dye::red("Мова") << endl; Sleep(100);
+			cout << dye::green("3)") << " " << dye::red("Вийти з гри") << endl; Sleep(100);
 			cout << dye::bright_white("Вибір:") << " ";
 			break;
 		}
@@ -144,7 +141,7 @@ void text_menu_start(unsigned short int& choice, unsigned short int lng) {
 			char_error(lng);
 		}
 		else if (choice < START_BTN || choice > EXIT_BTN) {
-
+			num_error(lng);
 			loop = true;
 		}
 		else
@@ -195,6 +192,7 @@ void first_stage(unsigned short int lng, unsigned int& first_counter) {
 			break;
 		}
 		cin >> user_res;
+		random_org_generator(dice_res, lng, 6);
 		if (cin.fail()) {
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -205,8 +203,7 @@ void first_stage(unsigned short int lng, unsigned int& first_counter) {
 			num_error(lng);
 			loop = true;
 		}
-		else
-			random_org_generator(dice_res, lng, 6);
+		else {
 		if (first_counter == 1 && user_res == dice_res)
 		{
 			switch (lng)
@@ -247,6 +244,7 @@ void first_stage(unsigned short int lng, unsigned int& first_counter) {
 				break;
 			}
 			loop = true;
+		}
 		}
 	} while (loop);
 }
@@ -402,13 +400,6 @@ void stats(unsigned int first_counter, unsigned int second_counter, unsigned sho
 	}
 }
 
-void endless_game(unsigned short int lng) {
-	unsigned int a;
-	random_org_generator(a, lng, 100);
-	cout << a;
-	system("pause");
-}
-
 void start_game(unsigned short int lng, unsigned int& first_counter, unsigned int& second_counter) {
 	bool loop = true;
 	short unsigned int choice = 0;
@@ -551,7 +542,48 @@ void language_change(unsigned short int& lng) {
 
 int final_choice(unsigned short int lng) {
 	unsigned short int choice = 0;
-	return 0;
+	bool loop = true;
+	while (loop)
+	{
+		switch (lng)
+		{
+		case ENGLISH:
+			cout << dye::green("1)") << " " << dye::red("Try again") << endl; Sleep(100);
+			cout << dye::green("2)") << " " << dye::red("Quit the game") << endl; Sleep(100);
+			cout << dye::bright_white("Choice:") << " ";
+			break;
+		case UKRAINIAN:
+			cout << dye::green("1)") << " " << dye::red("Спробувати ще") << endl; Sleep(100);
+			cout << dye::green("2)") << " " << dye::red("Вийти з гри") << endl; Sleep(100);
+			cout << dye::bright_white("Вибір:") << " ";
+			break;
+		}
+		cin >> choice;
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			loop = true;
+			char_error(lng);
+		}
+		else if (choice < TRY_AGAIN_BTN || choice > QUIT_BTN) {
+			num_error(lng);
+			loop = true;
+		}
+		else {
+			switch (choice)
+			{
+			case TRY_AGAIN_BTN:
+				loop = true;
+				system("cls");
+				return false;
+				break;
+			case QUIT_BTN:
+				loop = false;
+				return true;
+				break;
+			}
+		}
+	}
 }
 
 int main() {
@@ -570,10 +602,6 @@ int main() {
 		case START_BTN:
 			start_game(lng, first_counter, second_counter);
 			exit = final_choice(lng);
-			break;
-		case ENDLESS_BTN:
-			endless_game(lng);
-			exit = true;
 			break;
 		case LANGUAGE_BTN:
 			language_change(lng);
