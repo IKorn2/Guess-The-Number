@@ -34,6 +34,11 @@ enum Stage_ch {
 	SECOND_STAGE
 };
 
+enum Final_ch {
+	TRY_AGAIN_BTN = 1,
+	QUIT_BTN
+};
+
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
 	((string*)userp)->append((char*)contents, size * nmemb);
 	return size * nmemb;
@@ -596,6 +601,7 @@ int main() {
 	random_org_generator(ans, lng, 2);//Internet connection checker
 	do
 	{
+		first_counter = second_counter = 0;
 		text_menu_start(choice, lng);
 		switch (choice)
 		{
